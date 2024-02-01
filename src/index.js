@@ -10,6 +10,12 @@
 
 export default {
     async fetch(request, env) {
+        const url = new URL(request.url);
+        if (url.pathname !== '/notify') {
+            return new Response("Invalid request", {
+                status: 400
+            });
+        }
 
         /**
          * @param {Request} request
