@@ -9,7 +9,7 @@
  */
 
 export default {
-    async fetch(request, env, ctx) {
+    async fetch(request, env) {
 
         /**
          * @param {Request} request
