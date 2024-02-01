@@ -54,13 +54,15 @@ export default {
         }
 
         return parseRequest(request).then(data => {
-            if (typeof data == 'object') {
-                return sendNotification(data.Message, data.Subject).then(response => {
-                    return response;
-                });
-            } else {
-                return new Response("Invalid request");
+            if (typeof data == "object") {
+                if (data.Type === "SubscriptionConfirmation") {
+                    return sendNotification(data.SubscribeURL, "Confirm SNS Subscription");
+                } else if (data.Type === "Notification") {
+                    return sendNotification(data.Message, data.Subject);
+                }
             }
+
+            return new Response("Invalid request");
         });
     },
 };
