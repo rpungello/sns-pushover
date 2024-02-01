@@ -15,6 +15,10 @@ export default {
             return new Response("Invalid request", {
                 status: 400
             });
+        } else if (request.method !== 'POST') {
+            return new Response("Invalid request", {
+                status: 400
+            });
         }
 
         /**
