@@ -30,7 +30,14 @@ export default {
             if (contentType.includes("application/json")) {
                 return request.json();
             }
-            return request.text();
+
+            return request.text().then(text => {
+                try {
+                    return JSON.parse(text);
+                } catch (e) {
+                    return text;
+                }
+            });
         }
 
         /**
