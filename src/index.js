@@ -9,7 +9,48 @@
  */
 
 export default {
-	async fetch(request, env, ctx) {
-		return new Response("Hello World!");
-	},
+    async fetch(request, env, ctx) {
+
+        /**
+         * @param {Request} request
+         */
+        async function parseRequest(request) {
+            const {headers} = request;
+            const contentType = headers.get("content-type") || "";
+            if (contentType.includes("application/json")) {
+                return request.json();
+            }
+            return request.text();
+        }
+
+        /**
+         * @param {string} message
+         * @param {string} title
+         * @returns {Promise<Response>}
+         */
+        async function sendNotification(message, title) {
+            return fetch("https://api.pushover.net/1/messages.json", {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    user: `${env.PUSHOVER_USER}`,
+                    token: `${env.PUSHOVER_TOKEN}`,
+                    title: title,
+                    message: message
+                }),
+            })
+        }
+
+        return parseRequest(request).then(data => {
+            if (typeof data == 'object') {
+                return sendNotification(data.Message, data.Subject).then(response => {
+                    return response;
+                });
+            } else {
+                return new Response("Invalid request");
+            }
+        });
+    },
 };
