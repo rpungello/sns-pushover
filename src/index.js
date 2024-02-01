@@ -62,7 +62,9 @@ export default {
                 }
             }
 
-            return new Response("Invalid request");
+            return new Response("Invalid request", {
+                status: 400
+            });
         });
     },
 };
