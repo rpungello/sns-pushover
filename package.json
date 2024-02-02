@@ -10,5 +10,8 @@
     "start": "wrangler dev",
     "deploy": "wrangler deploy",
     "test": "vitest"
+  },
+  "dependencies": {
+    "sns-cloudflare-validator": "^1.0.1"
   }
 }
