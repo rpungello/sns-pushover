@@ -11,7 +11,7 @@ ARG NODE_VERSION=23.2.0
 FROM node:${NODE_VERSION}-alpine
 
 # Use production node environment by default.
-ENV NODE_ENV production
+ENV NODE_ENV=production
 
 
 WORKDIR /usr/src/app
@@ -35,4 +35,4 @@ COPY . .
 EXPOSE 80
 
 # Run the application.
-CMD node index.js
+CMD ["node", "index.js"]
