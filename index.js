@@ -24,14 +24,22 @@ async function sendNotification(message, title) {
 }
 
 http.createServer(function (req, res) {
+    console.log('Received request');
+
     getRawBody(req).then((buf) => {
         validator.validate(buf.toString()).then(payload => {
+            console.log('Validated payload', payload);
+
             if (payload.Type === 'SubscriptionConfirmation') {
                 fetch(payload.SubscribeURL).then(response => {
                     if (response.ok) {
+                        console.log('Confirmed subscription');
+
                         res.writeHead(200, {'Content-Type': 'text/plain'});
                         res.end('OK\n');
                     } else {
+                        console.log('Unable to confirm subscription');
+
                         res.writeHead(500, {'Content-Type': 'text/plain'});
                         res.end('Unable to confirm subscription\n');
                     }
@@ -39,17 +47,25 @@ http.createServer(function (req, res) {
             } else if (payload.Type === 'Notification') {
                 sendNotification(payload.Message, payload.Subject).then(response => {
                     if (response.ok) {
+                        console.log('Sent notification');
+
                         res.writeHead(200, {'Content-Type': 'text/plain'});
                         res.end('OK\n');
                     } else {
+                        console.log('Unable to send notification');
+
                         res.writeHead(500, {'Content-Type': 'text/plain'});
                         res.end('Unable to send notification\n');
                     }
                 });
             }
         }).catch(() => {
+            console.log('Invalid SNS payload');
+
             res.writeHead(400, {'Content-Type': 'text/plain'});
             res.end('Invalid SNS payload\n');
         });
     });
 }).listen(80);
+
+console.log('Listening');
