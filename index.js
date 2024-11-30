@@ -43,7 +43,9 @@ http.createServer(function (req, res) {
                         res.writeHead(200, {'Content-Type': 'text/plain'});
                         res.end('OK\n');
                     } else {
-                        console.log('Unable to confirm subscription');
+                        response.text().then(text => {
+                            console.log('Unable to confirm subscription', text);
+                        });
 
                         res.writeHead(500, {'Content-Type': 'text/plain'});
                         res.end('Unable to confirm subscription\n');
@@ -57,7 +59,9 @@ http.createServer(function (req, res) {
                         res.writeHead(200, {'Content-Type': 'text/plain'});
                         res.end('OK\n');
                     } else {
-                        console.log('Unable to send notification');
+                        response.text().then(text => {
+                            console.log('Unable to send notification', text);
+                        });
 
                         res.writeHead(500, {'Content-Type': 'text/plain'});
                         res.end('Unable to send notification\n');
