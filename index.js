@@ -23,6 +23,11 @@ async function sendNotification(message, title) {
     })
 }
 
+if (process.env.PUSHOVER_USER === undefined || process.env.PUSHOVER_TOKEN === undefined) {
+    console.error('Missing environment variables');
+    process.exit(1);
+}
+
 http.createServer(function (req, res) {
     console.log('Received request');
 
