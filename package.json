@@ -8,5 +8,9 @@
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "description": ""
+  "description": "",
+  "dependencies": {
+    "raw-body": "^3.0.0",
+    "sns-payload-validator": "^2.1.0"
+  }
 }
