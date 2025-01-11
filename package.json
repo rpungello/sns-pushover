@@ -10,6 +10,7 @@
     "license": "ISC",
     "description": "",
     "dependencies": {
+        "@derhuerst/br2nl": "^1.0.0",
         "raw-body": "^3.0.0",
         "sns-payload-validator": "^2.1.0"
     }

@@ -1,5 +1,6 @@
 const http = require('http');
 const Validator = require('sns-payload-validator');
+const br2nl = require('@derhuerst/br2nl')
 const validator = new Validator();
 const getRawBody = require('raw-body');
 
@@ -18,7 +19,7 @@ async function sendNotification(message, title) {
             user: process.env.PUSHOVER_USER,
             token: process.env.PUSHOVER_TOKEN,
             title: title,
-            message: message
+            message: br2nl(message)
         }),
     })
 }
